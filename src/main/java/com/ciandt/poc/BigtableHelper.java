@@ -28,7 +28,7 @@ public class BigtableHelper {
 	private static final Logger log = Logger.getLogger(BigtableHelper.class.getName());
 
 	// Refer to table metadata names by byte array in the HBase API
-	private static final byte[] TABLE_NAME = Bytes.toBytes("Hello-Bigtable");
+	private static final byte[] TABLE_NAME = Bytes.toBytes("Hello-Bigtable-lucas");
 	private static final byte[] COLUMN_FAMILY_NAME = Bytes.toBytes("cf1");
 	private static final byte[] COLUMN_NAME = Bytes.toBytes("greeting");
 

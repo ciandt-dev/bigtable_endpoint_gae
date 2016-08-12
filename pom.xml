@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ciandt.poc</groupId>
 	<artifactId>poc-bigtable</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>lucas</version>
 	<packaging>war</packaging>
 	<name>poc-bigtable</name>
 
@@ -186,12 +186,10 @@
 				<artifactId>gcloud-maven-plugin</artifactId>
 				<version>${gcloud.plugin.version}</version>
 				<configuration>
-					<set_default>true</set_default>
 					<gcloud_directory>/Users/kneto/opt/google-cloud-sdk</gcloud_directory>
 					<gcloud_project>googl-cit-gcp</gcloud_project>
 					<modules>bigtable</modules>
-					<version>dev</version>
-
+					<version>lucas</version>
 				</configuration>
 			</plugin>
 		</plugins>

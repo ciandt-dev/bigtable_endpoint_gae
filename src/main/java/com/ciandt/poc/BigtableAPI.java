@@ -62,6 +62,11 @@ public class BigtableAPI {
 		return new Response("Hello " + (name != null ? name : "world"));
 	}
 
-	
+	// ORM methods:
+
+	@ApiMethod(httpMethod = HttpMethod.POST, path = "orm/createTable")
+	public Response createTableWithORM(@Nullable @Named("tableName") String tableName) {
+		return new Response(new BigtableORMHelper().createTable());
+	}
 
 }
