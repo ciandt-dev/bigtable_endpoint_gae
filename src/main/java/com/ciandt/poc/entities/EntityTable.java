@@ -1,6 +1,5 @@
 package com.ciandt.poc.entities;
 
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import com.wlu.orm.hbase.annotation.DatabaseField;
 import com.wlu.orm.hbase.annotation.DatabaseTable;
 
@@ -11,12 +10,13 @@ import com.wlu.orm.hbase.annotation.DatabaseTable;
 public class EntityTable {
     // Make sure the object has an empty construction function with
     // no parameters and getter&setter functions for each member variable.
-
-    @DatabaseField()
+    @DatabaseField(id = true)
+    private String id;
+    @DatabaseField(familyName = "family_name")
     private String name;
-    @DatabaseField()
+    @DatabaseField(familyName = "family_email")
     private String email;
-    @DatabaseField()
+    @DatabaseField(familyName = "family_ssn")
     private Long ssn;
 
     public EntityTable() {
@@ -40,11 +40,18 @@ public class EntityTable {
 
     public String getName() {
         return name;
-
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

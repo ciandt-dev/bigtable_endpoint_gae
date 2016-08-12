@@ -28,12 +28,13 @@ public class BigtableORMHelper {
         }
     }
 
-    public String createTable() throws HBaseOrmException, IOException {
+    public String createTable() {
         try {
-            Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, connection);
+            Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, this.connection);
             dao.createTableIfNotExist();
         } catch (Exception e) {
             return e.toString();
         }
+        return "Table created successfully!";
     }
 }

@@ -2,8 +2,6 @@ package com.ciandt.poc.orm;
 
 import com.google.cloud.bigtable.hbase.BigtableConfiguration;
 import com.wlu.orm.hbase.connection.HBaseConnection;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.*;
 
 import java.io.IOException;

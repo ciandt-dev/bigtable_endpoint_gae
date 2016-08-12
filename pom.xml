@@ -10,10 +10,14 @@
 	<properties>
 		<bigtable.version>0.9.1</bigtable.version>
 		<hbase.version>1.1.5</hbase.version>
-		<appengine.version>1.9.40</appengine.version>
+		<appengine.version>1.9.42</appengine.version>
 		<gcloud.plugin.version>2.0.9.106.v20160420</gcloud.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+        <gcloud.directory>/usr/local/google-cloud-sdk</gcloud.directory>
+        <gcloud.project>googl-cit-gcp</gcloud.project>
+        <application.module>bigtable</application.module>
+        <application.version>lucas</application.version>
 	</properties>
 
 	<prerequisites>
@@ -101,6 +105,11 @@
 			<version>20140107</version>
 		</dependency>
 
+        <dependency>
+            <groupId>com.wlu.orm</groupId>
+            <artifactId>hbase-orm-lite</artifactId>
+            <version>1.0</version>
+        </dependency>
 
 	</dependencies>
 
@@ -170,8 +179,8 @@
 					<!-- address>0.0.0.0</address> <port>8080</port -->
 					<!-- Comment in the below snippet to enable local debugging with a remote 
 						debugger like those included with Eclipse or IntelliJ -->
-					<!-- jvmFlags> <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag> 
-						</jvmFlags -->
+					<jvmFlags> <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+						</jvmFlags>
 				</configuration>
 				<executions>
 					<execution>
@@ -186,12 +195,34 @@
 				<artifactId>gcloud-maven-plugin</artifactId>
 				<version>${gcloud.plugin.version}</version>
 				<configuration>
-					<gcloud_directory>/Users/kneto/opt/google-cloud-sdk</gcloud_directory>
-					<gcloud_project>googl-cit-gcp</gcloud_project>
-					<modules>bigtable</modules>
-					<version>lucas</version>
+					<gcloud_directory>${gcloud.directory}</gcloud_directory>
+					<gcloud_project>${gcloud.project}</gcloud_project>
+					<modules>${application.module}</modules>
+					<version>${application.version}</version>
 				</configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>com.wlu.orm</groupId>
+                            <artifactId>hbase-orm-lite</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <file>${basedir}/src/lib/hbase-orm-lite-1.0-SNAPSHOT.jar</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 		</plugins>
 		<pluginManagement>
 			<plugins>
