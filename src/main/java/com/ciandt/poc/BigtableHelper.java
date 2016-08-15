@@ -148,10 +148,9 @@ public class BigtableHelper {
 			log.info("Create table " + descriptor.getNameAsString());
 			admin.createTable(descriptor);
 
-			Table table = connection.getTable(TableName.valueOf(tableName));
-			table.put(put);
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			return e.toString();
 		}
 
@@ -205,6 +204,9 @@ public class BigtableHelper {
 
 			if (value instanceof List) {
 				log.info("value:" + element + " has been ignored because it's a list");
+			} else if (value instanceof String) {
+				log.info("value:" + element + " it's a LinkedHasmap");
+				descriptor.addFamily(new HColumnDescriptor(element));
 			} else if (value instanceof LinkedHashMap) {
 				log.info("value:" + element + " it's a LinkedHasmap");
 				descriptor.addFamily(new HColumnDescriptor(element));

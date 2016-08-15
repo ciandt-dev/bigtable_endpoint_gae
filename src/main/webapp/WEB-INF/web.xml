@@ -16,9 +16,15 @@
 		<url-pattern>/_ah/spi/*</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>bigtable</servlet-name>
+		<servlet-class>com.ciandt.poc.BigTableServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bigtable</servlet-name>
+		<url-pattern>/bigtable</url-pattern>
+	</servlet-mapping>
+	<!-- <listener> <listener-class>com.ciandt.poc.BigtableHelper</listener-class> 
+		</listener> -->
 
- 	<listener>
-		<listener-class>com.ciandt.poc.BigtableHelper</listener-class>
-	</listener>
- 
 </web-app>

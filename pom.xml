@@ -136,8 +136,8 @@
 				<version>3.1</version>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -179,8 +179,9 @@
 					<!-- address>0.0.0.0</address> <port>8080</port -->
 					<!-- Comment in the below snippet to enable local debugging with a remote 
 						debugger like those included with Eclipse or IntelliJ -->
-					<jvmFlags> <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
-						</jvmFlags>
+					<jvmFlags> 
+						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+					</jvmFlags>
 				</configuration>
 				<executions>
 					<execution>
@@ -197,7 +198,7 @@
 				<configuration>
 					<gcloud_directory>${gcloud.directory}</gcloud_directory>
 					<gcloud_project>${gcloud.project}</gcloud_project>
-					<modules>${application.module}</modules>
+<!-- 					<modules>${application.module}</modules> -->
 					<version>${application.version}</version>
 				</configuration>
 			</plugin>
