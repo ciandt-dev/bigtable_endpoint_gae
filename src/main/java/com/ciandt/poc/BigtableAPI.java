@@ -10,6 +10,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
+import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 
 @Api(name = "poc", version = "v1", clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID })
 @ApiClass(resource = "sample")
@@ -21,14 +22,14 @@ public class BigtableAPI {
 
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "sample/create")
 	public Object createTable(@Nullable @Named("tableName") String tableName,
-			@Nullable LinkedHashMap<String, Object> column) {
+			@Nullable LinkedTreeMap<String, Object> column) {
 
 		return new Response(new BigtableHelper().createTable(tableName, column));
 	}
 	
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "sample/upInsert")
 	public Object upInsertData(@Nullable @Named("tableName") String tableName,
-			@Nullable LinkedHashMap<String, Object> column) {
+			@Nullable LinkedTreeMap<String, Object> column) {
 
 		return new Response(new BigtableHelper().upInsertData(tableName, column));
 	}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 import com.google.common.reflect.TypeToken;
 
 /**
@@ -54,8 +55,8 @@ public class BigTableServlet extends HttpServlet {
 		String tableName = req.getParameter("tablename");
 		String body = req.getReader().lines()
 				.reduce("", (accumulator, actual) -> accumulator + actual);
-		LinkedHashMap<String, Object> list = new Gson().fromJson(
-				body, new TypeToken<LinkedHashMap<String, Object>>() {}.getType());
+		LinkedTreeMap<String, Object> list = new Gson().fromJson(
+				body, new TypeToken<LinkedTreeMap<String, Object>>() {}.getType());
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
 		pw.println("Table created in " + new BigtableHelper().createTable(tableName, list));

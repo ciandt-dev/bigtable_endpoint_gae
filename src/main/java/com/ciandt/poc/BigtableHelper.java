@@ -21,6 +21,7 @@ import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.FirstKeyOnlyFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
+import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 import com.google.cloud.bigtable.hbase.BigtableConfiguration;
 
 public class BigtableHelper {
@@ -127,7 +128,7 @@ public class BigtableHelper {
 		return buffer.toString();
 	}
 
-	public String createTable(String tableName, LinkedHashMap<String, Object> fields) {
+	public String createTable(String tableName, LinkedTreeMap<String, Object> fields) {
 
 		Long time = System.currentTimeMillis();
 
@@ -157,7 +158,7 @@ public class BigtableHelper {
 		return Long.toString(System.currentTimeMillis() - time) + "ms";
 	}
 
-	public String upInsertData(String tableName, LinkedHashMap<String, Object> fields) {
+	public String upInsertData(String tableName, LinkedTreeMap<String, Object> fields) {
 
 		Long time = System.currentTimeMillis();
 
@@ -190,7 +191,7 @@ public class BigtableHelper {
 	 * @param columnFamily
 	 */
 	@SuppressWarnings("unchecked")
-	private void process(HTableDescriptor descriptor, Put put, LinkedHashMap<String, Object> fields,
+	private void process(HTableDescriptor descriptor, Put put, LinkedTreeMap<String, Object> fields,
 			String columnFamily) {
 
 		Iterator<String> it = fields.keySet().iterator();
@@ -204,13 +205,10 @@ public class BigtableHelper {
 
 			if (value instanceof List) {
 				log.info("value:" + element + " has been ignored because it's a list");
-			} else if (value instanceof String) {
+			} else if (value instanceof LinkedTreeMap) {
 				log.info("value:" + element + " it's a LinkedHasmap");
 				descriptor.addFamily(new HColumnDescriptor(element));
-			} else if (value instanceof LinkedHashMap) {
-				log.info("value:" + element + " it's a LinkedHasmap");
-				descriptor.addFamily(new HColumnDescriptor(element));
-				this.process(descriptor, put, (LinkedHashMap<String, Object>) value, element);
+				this.process(descriptor, put, (LinkedTreeMap<String, Object>) value, element);
 			} else if (columnFamily != null) {
 				log.info("column:" + element + " values:" + (String) value + " included in bigtable");
 				put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(element), Bytes.toBytes((String) value));
