@@ -74,10 +74,10 @@ public class BigtableAPI {
 	public List<String> findAllKeysAppDevice(@Nullable @Named("table") String table) {
 		return new AppDeviceHelper().findAllKey(table);
 	}
-	
+
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "appDevice/findByKey")
-	public String findByKeyAppDevice(@Nullable @Named("name") String name) {
-		return new AppDeviceHelper().findByKey(name);
+	public Response findByKeyAppDevice(@Nullable @Named("name") String name) {
+		return new Response(new AppDeviceHelper().findByKey(name));
 	}
 
 }
