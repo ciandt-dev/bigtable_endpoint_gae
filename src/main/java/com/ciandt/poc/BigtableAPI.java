@@ -68,5 +68,15 @@ public class BigtableAPI {
 	public Response createTableWithORM(@Nullable @Named("tableName") String tableName) {
 		return new Response(new BigtableORMHelper().createTable());
 	}
+	
+	@ApiMethod(httpMethod = HttpMethod.GET, path = "appDevice/findAll")
+	public List<String> findAllKeysAppDevice(@Nullable @Named("table") String table) {
+		return new AppDeviceHelper().findAllKey(table);
+	}
+	
+	@ApiMethod(httpMethod = HttpMethod.GET, path = "appDevice/findByKey")
+	public String findByKeyAppDevice(@Nullable @Named("name") String name) {
+		return new AppDeviceHelper().findByKey(name);
+	}
 
 }
