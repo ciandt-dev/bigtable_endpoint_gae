@@ -12,12 +12,15 @@ public class EntityTable {
     // no parameters and getter&setter functions for each member variable.
     @DatabaseField(id = true)
     private String id;
+    
     @DatabaseField(familyName = "family_name")
     private String name;
+    
     @DatabaseField(familyName = "family_email")
     private String email;
+    
     @DatabaseField(familyName = "family_ssn")
-    private Long ssn;
+    private String ssn;
 
     public EntityTable() {
     }
@@ -30,11 +33,11 @@ public class EntityTable {
         this.email = email;
     }
 
-    public Long getSsn() {
+    public String getSsn() {
         return ssn;
     }
 
-    public void setSsn(Long ssn) {
+    public void setSsn(String ssn) {
         this.ssn = ssn;
     }
 
@@ -54,8 +57,8 @@ public class EntityTable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Table schema: ...";
-    }
+	@Override
+	public String toString() {
+		return "EntityTable [id=" + id + ", name=" + name + ", email=" + email + ", ssn=" + ssn + "]";
+	}
 }

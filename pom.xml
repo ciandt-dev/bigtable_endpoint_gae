@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ciandt.poc</groupId>
 	<artifactId>poc-bigtable</artifactId>
-	<version>lucas</version>
+	<version>leanplum</version>
 	<packaging>war</packaging>
 	<name>poc-bigtable</name>
 
@@ -17,7 +17,7 @@
         <gcloud.directory>/usr/local/google-cloud-sdk</gcloud.directory>
         <gcloud.project>googl-cit-gcp</gcloud.project>
         <application.module>bigtable</application.module>
-        <application.version>lucas</application.version>
+        <application.version>leanplum</application.version>
 	</properties>
 
 	<prerequisites>
@@ -105,10 +105,11 @@
 			<version>20140107</version>
 		</dependency>
 
+		<!-- CI&T FORK - https://github.com/ciandt-dev/hbase-ormlite -->
         <dependency>
-            <groupId>com.wlu.orm</groupId>
+            <groupId>hbase.orm</groupId>
             <artifactId>hbase-orm-lite</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
 
 	</dependencies>
@@ -214,11 +215,11 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
-                            <groupId>com.wlu.orm</groupId>
+                            <groupId>hbase.orm</groupId>
                             <artifactId>hbase-orm-lite</artifactId>
-                            <version>1.0</version>
+                            <version>1.1-SNAPSHOT</version>
                             <packaging>jar</packaging>
-                            <file>${basedir}/src/lib/hbase-orm-lite-1.0-SNAPSHOT.jar</file>
+                            <file>${basedir}/src/lib/hbase-orm-lite-1.1-SNAPSHOT.jar</file>
                         </configuration>
                     </execution>
                 </executions>
