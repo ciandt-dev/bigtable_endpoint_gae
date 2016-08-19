@@ -19,9 +19,9 @@ public class BigtableORMHelper<T> {
 
 	private static final Logger log = Logger.getLogger(BigtableHelper.class.getName());
 
-	private static String PROJECT_ID = "googl-cit-gcp";
+	private static String PROJECT_ID = "leanplum-staging";
 
-	private static String INSTANCE_ID = "poc-study";
+	private static String INSTANCE_ID = "cit-test";
 
 	private HBaseConnection hBaseConnection;
 
@@ -87,4 +87,6 @@ public class BigtableORMHelper<T> {
 	public static void main(String[] args) {
 		new BigtableORMHelper<EntityTable>(EntityTable.class).createTable();
 	}
+	
+	
 }
