@@ -90,5 +90,6 @@ public class BigtableORMHelper<T> {
 	
 	public static void main(String[] args) throws Exception {
 		new BigtableORMHelper<AppDevice>(AppDevice.class).createTable();
+		System.exit(0);
 	}
 }
