@@ -24,6 +24,17 @@
 		<servlet-name>bigtable</servlet-name>
 		<url-pattern>/bigtable</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>orm</servlet-name>
+		<servlet-class>com.ciandt.poc.BigTableORMServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orm</servlet-name>
+		<url-pattern>/orm/appdevice/*</url-pattern>
+	</servlet-mapping>
+	
+	
 	<!-- <listener> <listener-class>com.ciandt.poc.BigtableHelper</listener-class> 
 		</listener> -->
 
