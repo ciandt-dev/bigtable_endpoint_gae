@@ -17,7 +17,7 @@ import com.wlu.orm.hbase.schema.value.StringValue;
  */
 public class BigtableORMHelper<T> {
 
-	private static final Logger log = Logger.getLogger(BigtableHelper.class.getName());
+	private static final Logger log = Logger.getLogger(BigtableORMHelper.class.getName());
 
 	private static String PROJECT_ID = "leanplum-staging";
 
@@ -46,7 +46,9 @@ public class BigtableORMHelper<T> {
 	public String createTable() {
 		try {
 			dao.createTableIfNotExist();
+			log.info("Talbe created or table already exists");
 		} catch (IOException e) {
+			log.severe("CreateTable failed.");
 			e.printStackTrace();
 			return e.getMessage();
 		}
@@ -56,10 +58,12 @@ public class BigtableORMHelper<T> {
 	public String update(T t){
 		try {
 			dao.insert(t);
-			return "";
+			log.info("Inserted successfuly");
+			return "Inserted successfuly";
 		} catch (HBaseOrmException e) {
+			log.severe("CreateTable failed.");
 			e.printStackTrace();
-			return e.toString();
+			return e.getMessage();
 		}
 	}
 
@@ -67,10 +71,12 @@ public class BigtableORMHelper<T> {
 
 		try {
 			dao.update(t);
-			return "";
+			log.info("Updated successfuly");
+			return "Updated successfuly";
 		} catch (HBaseOrmException e) {
+			log.severe("Insert failed.");
 			e.printStackTrace();
-			return e.toString();
+			return e.getMessage();
 		}
 	}
 
@@ -79,14 +85,13 @@ public class BigtableORMHelper<T> {
 			T queryWithFilter = dao.queryById(new StringValue(key));
 			return queryWithFilter.toString();
 		} catch (HBaseOrmException e) {
+			log.severe("GetRowByKey failed.");
 			e.printStackTrace();
-			return e.toString();
+			return e.getMessage();
 		}
 	}
 	
 	public static void main(String[] args) {
 		new BigtableORMHelper<EntityTable>(EntityTable.class).createTable();
 	}
-	
-	
 }
