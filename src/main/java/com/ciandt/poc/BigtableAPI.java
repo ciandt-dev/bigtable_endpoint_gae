@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.ciandt.poc.beans.Response;
+import com.ciandt.poc.entities.EntityTable;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiClass;
 import com.google.api.server.spi.config.ApiMethod;
@@ -67,7 +68,7 @@ public class BigtableAPI {
 
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "orm/createTable")
 	public Response createTableWithORM(@Nullable @Named("tableName") String tableName) {
-		return new Response(new BigtableORMHelper().createTable());
+		return new Response(new BigtableORMHelper<EntityTable>(EntityTable.class).createTable());
 	}
 	
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "appDevice/findAll")

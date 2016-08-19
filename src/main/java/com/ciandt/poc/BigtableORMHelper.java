@@ -12,44 +12,50 @@ import com.wlu.orm.hbase.exceptions.HBaseOrmException;
 import com.wlu.orm.hbase.schema.value.StringValue;
 
 /**
- * Created by lucasarruda on 8/11/16.
- * Created by famaral on 8/17/16.
+ * Created by lucasarruda on 8/11/16
+ * and by famaral on 8/17/16.
  */
-public class BigtableORMHelper {
+public class BigtableORMHelper<T> {
 
 	private static final Logger log = Logger.getLogger(BigtableHelper.class.getName());
+
 	private static String PROJECT_ID = "googl-cit-gcp";
+
 	private static String INSTANCE_ID = "poc-study";
+
 	private HBaseConnection hBaseConnection;
 
-	public BigtableORMHelper() {
+	private Dao<T> dao;
+
+	public BigtableORMHelper(Class<T> clazz) {
 		try {
 			this.hBaseConnection = new HBaseConnection(
-					BigtableConfiguration.connect(PROJECT_ID, INSTANCE_ID));//new BigTableConnection();
-		}
-		catch (IOException e) {
+					BigtableConfiguration.connect(PROJECT_ID, INSTANCE_ID));
+			this.dao = new DaoImpl<T>(clazz, hBaseConnection);
+		} catch (IOException e) {
 			log.severe("Connection to BigTable failed.");
+			e.printStackTrace();
 			// Deal with it...
+		} catch (HBaseOrmException e) {
+			// TODO Auto-generated catch block
+			log.severe("Dao Creation failed.");
+			e.printStackTrace();
 		}
 	}
 
 	public String createTable() {
 		try {
-			Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, hBaseConnection);
-
 			dao.createTableIfNotExist();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-			return e.toString();
+			return e.getMessage();
 		}
 		return "Table created successfully!";
 	}
 
-	public String update(EntityTable entityTable){
-
+	public String update(T t){
 		try {
-			Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, hBaseConnection);
-			dao.insert(entityTable);
+			dao.insert(t);
 			return "";
 		} catch (HBaseOrmException e) {
 			e.printStackTrace();
@@ -57,26 +63,28 @@ public class BigtableORMHelper {
 		}
 	}
 
-	public String insert(EntityTable entityTable){
+	public String insert(T t){
 
 		try {
-			Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, hBaseConnection);
-			dao.update(entityTable);
+			dao.update(t);
 			return "";
+		} catch (HBaseOrmException e) {
+			e.printStackTrace();
+			return e.toString();
+		}
+	}
+
+	public String getRowByKey(String key) {
+		try {
+			T queryWithFilter = dao.queryById(new StringValue(key));
+			return queryWithFilter.toString();
 		} catch (HBaseOrmException e) {
 			e.printStackTrace();
 			return e.toString();
 		}
 	}
 	
-	public String getRowByKey(String key) {
-		try {
-			Dao<EntityTable> dao = new DaoImpl<EntityTable>(EntityTable.class, hBaseConnection);
-			EntityTable queryWithFilter = dao.queryById(new StringValue(key));
-			return queryWithFilter.toString();
-		} catch (HBaseOrmException e) {
-			e.printStackTrace();
-			return e.toString();
-		}
+	public static void main(String[] args) {
+		new BigtableORMHelper<EntityTable>(EntityTable.class).createTable();
 	}
 }
