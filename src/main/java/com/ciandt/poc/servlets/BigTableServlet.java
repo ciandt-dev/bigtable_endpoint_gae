@@ -1,7 +1,8 @@
-package com.ciandt.poc;
+package com.ciandt.poc.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ciandt.poc.entities.AppDevice;
+import com.ciandt.poc.BigtableHelper;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 import com.google.common.reflect.TypeToken;
@@ -17,25 +18,25 @@ import com.google.common.reflect.TypeToken;
 /**
  * Created by famaral on 8/15/16.
  */
-@WebServlet(name = "orm", urlPatterns = {"/orm/appdevice"} )
-public class BigTableORMServlet extends HttpServlet {
+@WebServlet(name = "bigtable", urlPatterns = {"/bigtable"} )
+public class BigTableServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6253116304248759593L;
 
 	/**
 	 * Servlet responsible to get a table
-	 * curl 'http://localhost:8080/orm/appdevice?rowkey=1234' \
+	 * curl 'http://localhost:8080/bigtable?tablename=mytable' \
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		if(req.getRequestURI().equals("/favicon.ico"))
 			return;
-		String pathInfo = req.getPathInfo();
-		String rowkey = pathInfo.split("/")[1];
+		String table = req.getParameter("tablename");
+
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
-		pw.println("Row found: \n  " + new BigtableORMHelper<AppDevice>(AppDevice.class).getRowByKey(rowkey));
+		pw.println("Keys found: \n  " + new BigtableHelper().findAllKey(table));
 		pw.close();
 	}
 
@@ -59,9 +60,7 @@ public class BigTableORMServlet extends HttpServlet {
 				body, new TypeToken<LinkedTreeMap<String, Object>>() {}.getType());
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
-		AppDevice appDevice = new AppDevice();
-		//TODO Add fields from appdevice post body
-		pw.println("Table created in " + new BigtableORMHelper<AppDevice>(AppDevice.class).insert(appDevice));
+		pw.println("Table created in " + new BigtableHelper().createTable(tableName, list));
 		pw.close();
 	}
 }
