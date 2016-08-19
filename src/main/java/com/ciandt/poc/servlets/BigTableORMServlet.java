@@ -14,12 +14,13 @@ import com.ciandt.poc.entities.AppDevice;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 import com.google.common.reflect.TypeToken;
+import com.wlu.orm.hbase.exceptions.HBaseOrmException;
 
 /**
  * Created by famaral on 8/15/16.
  */
 @WebServlet(name = "orm", urlPatterns = {"/orm/appdevice"} )
-public class BigTableORMServlet extends HttpServlet {
+public class BigTableORMServlet<T> extends HttpServlet {
 
 	private static final long serialVersionUID = 6253116304248759593L;
 
@@ -36,7 +37,14 @@ public class BigTableORMServlet extends HttpServlet {
 		String rowkey = pathInfo.split("/")[1];
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
-		pw.println("Row found: \n  " + new BigtableORMHelper<AppDevice>(AppDevice.class).getRowByKey(rowkey));
+		String row = "";
+		try {
+			row = new BigtableORMHelper<AppDevice>(AppDevice.class).getRowByKey(rowkey);
+			pw.println("Row found: \n  " + row );
+		} catch (Exception e) {
+			e.printStackTrace();
+			pw.println("Error trying to getRowByKey" );
+		}
 		pw.close();
 	}
 
@@ -52,6 +60,28 @@ public class BigTableORMServlet extends HttpServlet {
 		
 		if(req.getRequestURI().equals("/favicon.ico"))
 			return;
+		String body = req.getReader().lines()
+				.reduce("", (accumulator, actual) -> accumulator + actual);
+		LinkedTreeMap<String, Object> list = new Gson().fromJson(
+				body, new TypeToken<LinkedTreeMap<String, Object>>() {}.getType());
+		resp.setContentType("text/plain");
+		PrintWriter pw = resp.getWriter();
+		AppDevice appDevice = new AppDevice();
+		//TODO Add fields from appdevice post body
+		try {
+			String result = new BigtableORMHelper<AppDevice>(AppDevice.class).insert(appDevice);
+			pw.println("Inserted: " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			pw.println("Error trying to insert" );
+		}
+		pw.close();
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getRequestURI().equals("/favicon.ico"))
+			return;
 		String tableName = req.getParameter("tablename");
 		String body = req.getReader().lines()
 				.reduce("", (accumulator, actual) -> accumulator + actual);
@@ -61,7 +91,13 @@ public class BigTableORMServlet extends HttpServlet {
 		PrintWriter pw = resp.getWriter();
 		AppDevice appDevice = new AppDevice();
 		//TODO Add fields from appdevice post body
-		pw.println("Table created in " + new BigtableORMHelper<AppDevice>(AppDevice.class).insert(appDevice));
+		try {
+			String result = new BigtableORMHelper<AppDevice>(AppDevice.class).update(appDevice);
+			pw.println("Updated: " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			pw.println("Error trying to update" );
+		}
 		pw.close();
 	}
 }

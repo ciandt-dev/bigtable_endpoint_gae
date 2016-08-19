@@ -3,6 +3,7 @@ package com.ciandt.poc;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import com.ciandt.poc.entities.AppDevice;
 import com.ciandt.poc.entities.EntityTable;
 import com.google.cloud.bigtable.hbase.BigtableConfiguration;
 import com.wlu.orm.hbase.connection.HBaseConnection;
@@ -27,19 +28,15 @@ public class BigtableORMHelper<T> {
 
 	private Dao<T> dao;
 
-	public BigtableORMHelper(Class<T> clazz) {
+	public BigtableORMHelper(Class<T> clazz) throws Exception {
 		try {
 			this.hBaseConnection = new HBaseConnection(
 					BigtableConfiguration.connect(PROJECT_ID, INSTANCE_ID));
 			this.dao = new DaoImpl<T>(clazz, hBaseConnection);
-		} catch (IOException e) {
-			log.severe("Connection to BigTable failed.");
-			e.printStackTrace();
+		} catch (Exception e) {
 			// Deal with it...
-		} catch (HBaseOrmException e) {
-			// TODO Auto-generated catch block
-			log.severe("Dao Creation failed.");
-			e.printStackTrace();
+			log.severe("Connection to BigTable failed.");
+			throw e;
 		}
 	}
 
@@ -91,7 +88,7 @@ public class BigtableORMHelper<T> {
 		}
 	}
 	
-	public static void main(String[] args) {
-		new BigtableORMHelper<EntityTable>(EntityTable.class).createTable();
+	public static void main(String[] args) throws Exception {
+		new BigtableORMHelper<AppDevice>(AppDevice.class).createTable();
 	}
 }
