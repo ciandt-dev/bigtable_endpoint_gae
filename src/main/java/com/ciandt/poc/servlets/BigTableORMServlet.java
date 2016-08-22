@@ -38,8 +38,9 @@ public class BigTableORMServlet<T> extends HttpServlet {
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
 		String row = "";
-		try {
-			row = new BigtableORMHelper<AppDevice>(AppDevice.class).getRowByKey(rowkey);
+		try(BigtableORMHelper<AppDevice> orm = 
+				new BigtableORMHelper<AppDevice>(AppDevice.class)) {
+			row = orm.getRowByKey(rowkey);
 			pw.println("Row found: \n  " + row );
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,8 +69,9 @@ public class BigTableORMServlet<T> extends HttpServlet {
 		PrintWriter pw = resp.getWriter();
 		AppDevice appDevice = new AppDevice();
 		//TODO Add fields from appdevice post body
-		try {
-			String result = new BigtableORMHelper<AppDevice>(AppDevice.class).insert(appDevice);
+		try(BigtableORMHelper<AppDevice> orm = 
+				new BigtableORMHelper<AppDevice>(AppDevice.class)) {
+			String result = orm.insert(appDevice);
 			pw.println("Inserted: " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +84,6 @@ public class BigTableORMServlet<T> extends HttpServlet {
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getRequestURI().equals("/favicon.ico"))
 			return;
-		String tableName = req.getParameter("tablename");
 		String body = req.getReader().lines()
 				.reduce("", (accumulator, actual) -> accumulator + actual);
 		LinkedTreeMap<String, Object> list = new Gson().fromJson(
@@ -91,8 +92,9 @@ public class BigTableORMServlet<T> extends HttpServlet {
 		PrintWriter pw = resp.getWriter();
 		AppDevice appDevice = new AppDevice();
 		//TODO Add fields from appdevice post body
-		try {
-			String result = new BigtableORMHelper<AppDevice>(AppDevice.class).update(appDevice);
+		try(BigtableORMHelper<AppDevice> orm = 
+				new BigtableORMHelper<AppDevice>(AppDevice.class)) {
+			String result = orm.update(appDevice);
 			pw.println("Updated: " + result);
 		} catch (Exception e) {
 			e.printStackTrace();

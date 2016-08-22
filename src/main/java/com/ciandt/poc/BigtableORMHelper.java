@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.BufferedMutator;
+import org.apache.hadoop.hbase.client.BufferedMutatorParams;
+
 import com.ciandt.poc.entities.AppDevice;
 import com.ciandt.poc.entities.AppDeviceLocaleInfo;
 import com.ciandt.poc.entities.AppDeviceSessionData;
@@ -92,6 +96,18 @@ public class BigtableORMHelper<T> implements Closeable{
 		}
 	}
 
+	public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+		return this.hBaseConnection.getConnection()
+								   .getBufferedMutator(tableName);
+
+	}
+
+
+	@Override
+	public void close() throws IOException {
+		this.hBaseConnection.getConnection().close();
+	}
+
 	public static void main(String[] args) throws Exception {
 		try(BigtableORMHelper<AppDevice> orm = 
 				new BigtableORMHelper<AppDevice>(AppDevice.class)){
@@ -122,10 +138,5 @@ public class BigtableORMHelper<T> implements Closeable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void close() throws IOException {
-		this.hBaseConnection.getConnection().close();
 	}
 }
