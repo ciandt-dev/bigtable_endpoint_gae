@@ -220,7 +220,7 @@
                             <artifactId>hbase-orm-lite</artifactId>
                             <version>${hbase-lite.version}</version>
                             <packaging>jar</packaging>
-                            <file>${basedir}/src/lib/hbase-orm-lite-1.1-SNAPSHOT.jar</file>
+                            <file>${basedir}/src/lib/hbase-orm-lite-${hbase-lite.version}.jar</file>
                         </configuration>
                     </execution>
                 </executions>
