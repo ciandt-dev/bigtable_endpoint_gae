@@ -8,150 +8,150 @@ import com.wlu.orm.hbase.annotation.DatabaseTable;
 @DatabaseTable(canBeFamily=true)
 public class AppDeviceSessionData {
     
-	@DatabaseField()
-    private Double total_time_from_sessions;
+	@DatabaseField
+    private Double totalTimeFromSessions;
     
-    @DatabaseField()
-    private Date last_session_start_time;
+    @DatabaseField
+    private Date lastSessionStartTime;
 	
-    @DatabaseField()
-	public String current_session;
+    @DatabaseField
+	public String currentSession;
 	
-    @DatabaseField()
-	public String first_session;
+    @DatabaseField
+	public String firstSession;
 	
-    @DatabaseField()
-	public Date session_start_time;
+    @DatabaseField
+	public Date sessionStartTime;
 	
-    @DatabaseField()
-	public Date session_time_key;
+    @DatabaseField
+	public Date sessionTimeKey;
 	
-    @DatabaseField()
-	public int session_position;
+    @DatabaseField
+	public int sessionPosition;
 	
-    @DatabaseField()
-	public boolean session_is_background;
+    @DatabaseField
+	public boolean sessionIsBackground;
 	
-    @DatabaseField()
-	public boolean session_counted_for_dau;
+    @DatabaseField
+	public boolean sessionCountedForDau;
 	
-    @DatabaseField()
-	public boolean session_counted_for_mau;
+    @DatabaseField
+	public boolean sessionCountedForMau;
 	
-    @DatabaseField()
-	public boolean session_closed;
+    @DatabaseField
+	public boolean sessionClosed;
 	
-    @DatabaseField()
-	public Date session_pause_time;
+    @DatabaseField
+	public Date sessionPauseTime;
 	
-    @DatabaseField()
-	public double session_pause_length_seconds;
+    @DatabaseField
+	public double sessionPauseLengthSeconds;
 
 	public AppDeviceSessionData() {
 	}
 
-	public String getCurrent_session() {
-		return current_session;
+	public String getCurrentSession() {
+		return currentSession;
 	}
 
-	public void setCurrent_session(String current_session) {
-		this.current_session = current_session;
+	public void setCurrentSession(String currentSession) {
+		this.currentSession = currentSession;
 	}
 
-	public String getFirst_session() {
-		return first_session;
+	public String getFirstSession() {
+		return firstSession;
 	}
 
-	public void setFirst_session(String first_session) {
-		this.first_session = first_session;
+	public void setFirstSession(String firstSession) {
+		this.firstSession = firstSession;
 	}
 
-	public Date getSession_start_time() {
-		return session_start_time;
+	public Date getSessionStartTime() {
+		return sessionStartTime;
 	}
 
-	public void setSession_start_time(Date session_start_time) {
-		this.session_start_time = session_start_time;
+	public void setSessionStarTime(Date sessionStartTime) {
+		this.sessionStartTime = sessionStartTime;
 	}
 
-	public Date getSession_time_key() {
-		return session_time_key;
+	public Date getSessionTimeKey() {
+		return sessionTimeKey;
 	}
 
-	public void setSession_time_key(Date session_time_key) {
-		this.session_time_key = session_time_key;
+	public void setSessionTimeKey(Date sessionTimeKey) {
+		this.sessionTimeKey = sessionTimeKey;
 	}
 
-	public int getSession_position() {
-		return session_position;
+	public int getSessionPosition() {
+		return sessionPosition;
 	}
 
-	public void setSession_position(int session_position) {
-		this.session_position = session_position;
+	public void setSessionPosition(int sessionPosition) {
+		this.sessionPosition = sessionPosition;
 	}
 
-	public boolean isSession_is_background() {
-		return session_is_background;
+	public boolean isSessionIsBackground() {
+		return sessionIsBackground;
 	}
 
-	public void setSession_is_background(boolean session_is_background) {
-		this.session_is_background = session_is_background;
+	public void setSessionIsBackground(boolean sessionIsBackground) {
+		this.sessionIsBackground = sessionIsBackground;
 	}
 
-	public boolean isSession_counted_for_dau() {
-		return session_counted_for_dau;
+	public boolean isSessionCountedForDau() {
+		return sessionCountedForDau;
 	}
 
-	public void setSession_counted_for_dau(boolean session_counted_for_dau) {
-		this.session_counted_for_dau = session_counted_for_dau;
+	public void setSessionCountedForDau(boolean sessionCountedForDau) {
+		this.sessionCountedForDau = sessionCountedForDau;
 	}
 
-	public boolean isSession_counted_for_mau() {
-		return session_counted_for_mau;
+	public boolean isSessionCountedForMau() {
+		return sessionCountedForMau;
 	}
 
-	public void setSession_counted_for_mau(boolean session_counted_for_mau) {
-		this.session_counted_for_mau = session_counted_for_mau;
+	public void setSessionCountedForMau(boolean sessionCountedForMau) {
+		this.sessionCountedForMau = sessionCountedForMau;
 	}
 
-	public boolean isSession_closed() {
-		return session_closed;
+	public boolean isSessionClosed() {
+		return sessionClosed;
 	}
 
-	public void setSession_closed(boolean session_closed) {
-		this.session_closed = session_closed;
+	public void setSessionClosed(boolean sessionClosed) {
+		this.sessionClosed = sessionClosed;
 	}
 
-	public Date getSession_pause_time() {
-		return session_pause_time;
+	public Date getSessionPauseTime() {
+		return sessionPauseTime;
 	}
 
-	public void setSession_pause_time(Date session_pause_time) {
-		this.session_pause_time = session_pause_time;
+	public void setSessionPauseTime(Date sessionPauseTime) {
+		this.sessionPauseTime = sessionPauseTime;
 	}
 
-	public double getSession_pause_length_seconds() {
-		return session_pause_length_seconds;
+	public double getSessionPauseLengthSeconds() {
+		return sessionPauseLengthSeconds;
 	}
 
-	public void setSession_pause_length_seconds(double session_pause_length_seconds) {
-		this.session_pause_length_seconds = session_pause_length_seconds;
+	public void setSessionPauseLengthSeconds(double sessionPauseLengthSeconds) {
+		this.sessionPauseLengthSeconds = sessionPauseLengthSeconds;
 	}
 
-	public Double getTotal_time_from_sessions() {
-		return total_time_from_sessions;
+	public Double getTotalTimeFromSessions() {
+		return totalTimeFromSessions;
 	}
 
-	public void setTotal_time_from_sessions(Double total_time_from_sessions) {
-		this.total_time_from_sessions = total_time_from_sessions;
+	public void setTotalTimeFromSessions(Double totalTimeFromSessions) {
+		this.totalTimeFromSessions = totalTimeFromSessions;
 	}
 
-	public Date getLast_session_start_time() {
-		return last_session_start_time;
+	public Date getLastSessionStartTime() {
+		return lastSessionStartTime;
 	}
 
-	public void setLast_session_start_time(Date last_session_start_time) {
-		this.last_session_start_time = last_session_start_time;
+	public void setLastSessionStartTime(Date lastSessionStartTime) {
+		this.lastSessionStartTime = lastSessionStartTime;
 	}
 	
 }

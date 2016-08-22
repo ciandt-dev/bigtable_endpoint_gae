@@ -17,7 +17,7 @@ public class AppDeviceLocaleInfo {
     private String timezone;
 
     @DatabaseField()
-    private Integer timezone_offset_seconds;
+    private Integer timezoneOffsetSeconds;
 
     @DatabaseField()
     private String locale;
@@ -55,12 +55,12 @@ public class AppDeviceLocaleInfo {
 		this.timezone = timezone;
 	}
 
-	public Integer getTimezone_offset_seconds() {
-		return timezone_offset_seconds;
+	public Integer getTimezoneOffsetSeconds() {
+		return timezoneOffsetSeconds;
 	}
 
-	public void setTimezone_offset_seconds(Integer timezone_offset_seconds) {
-		this.timezone_offset_seconds = timezone_offset_seconds;
+	public void setTimezoneOffsetSeconds(Integer timezoneOffsetSeconds) {
+		this.timezoneOffsetSeconds = timezoneOffsetSeconds;
 	}
 
 	public String getLocale() {

@@ -94,7 +94,8 @@ public class BigtableORMHelper<T> {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new BigtableORMHelper<AppDevice>(AppDevice.class).createTable();
+		BigtableORMHelper<AppDevice> orm = new BigtableORMHelper<AppDevice>(AppDevice.class);
+		orm.createTable();
 		AppDevice app = new AppDevice();
 		app.setApp("myid#0101010");
 		app.setAnomaly(123123L);
@@ -103,8 +104,8 @@ public class BigtableORMHelper<T> {
 		app.setVersion(1);
 		
 		AppDeviceSessionData data = new AppDeviceSessionData();
-		data.setCurrent_session("mysession0000000001");
-		data.setSession_closed(false);
+		data.setCurrentSession("mysession0000000001");
+		data.setSessionClosed(false);
 		app.setData(data);
 		
 		AppDeviceLocaleInfo locale = new AppDeviceLocaleInfo();
@@ -116,9 +117,7 @@ public class BigtableORMHelper<T> {
 		info.setUserId("myuserId");
 		app.setUserInfo(info);
 		
-		Map<String, String> list = ImmutableMap.of("1", "one","2", "two");
-		app.setMapValues(list);
-		new BigtableORMHelper<AppDevice>(AppDevice.class).insert(app);
+		orm.insert(app);
 		System.exit(0);
 	}
 }
