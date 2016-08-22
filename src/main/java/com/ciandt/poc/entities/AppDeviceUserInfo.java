@@ -3,62 +3,63 @@ package com.ciandt.poc.entities;
 import java.util.Date;
 
 import com.wlu.orm.hbase.annotation.DatabaseField;
+import com.wlu.orm.hbase.annotation.DatabaseTable;
 
+@DatabaseTable(canBeFamily=true)
 public class AppDeviceUserInfo {
 
-    @DatabaseField()
-    private String user_id;
+    @DatabaseField(qualifierName="user_id_value")
+    private String userId;
 
     @DatabaseField()
-    private boolean is_developer;
+    private boolean isDeveloper;
 
 
     @DatabaseField()
-    private boolean has_user_id;
+    private boolean hasUserId;
     
-    
     @DatabaseField()
-    private Date last_user_time;
+    private Date lastUserTime;
     
     @DatabaseField()
     private String ip;
    
     @DatabaseField()
-    private Date last_active;
+    private Date lastActive;
 
     @DatabaseField()
-    private Date last_updated;
+    private Date lastUpdated;
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public boolean isIs_developer() {
-		return is_developer;
+	public boolean isDeveloper() {
+		return isDeveloper;
 	}
 
-	public void setIs_developer(boolean is_developer) {
-		this.is_developer = is_developer;
+	public void setIsDeveloper(boolean isDeveloper) {
+		this.isDeveloper = isDeveloper;
 	}
 
-	public boolean isHas_user_id() {
-		return has_user_id;
+	public boolean isHasUserId() {
+		return hasUserId;
 	}
 
-	public void setHas_user_id(boolean has_user_id) {
-		this.has_user_id = has_user_id;
+	public void setHasUserd(boolean hasUserId) {
+		this.hasUserId = hasUserId;
 	}
 
-	public Date getLast_user_time() {
-		return last_user_time;
+	public Date getLastUserTime() {
+		return lastUserTime;
 	}
 
-	public void setLast_user_time(Date last_user_time) {
-		this.last_user_time = last_user_time;
+	public void setLastUserTime(Date lastUserTime) {
+		this.lastUserTime = lastUserTime;
 	}
 
 	public String getIp() {
@@ -69,20 +70,20 @@ public class AppDeviceUserInfo {
 		this.ip = ip;
 	}
 
-	public Date getLast_active() {
-		return last_active;
+	public Date getLastActive() {
+		return lastActive;
 	}
 
-	public void setLast_active(Date last_active) {
-		this.last_active = last_active;
+	public void setLastActive(Date lastActive) {
+		this.lastActive = lastActive;
 	}
 
-	public Date getLast_updated() {
-		return last_updated;
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public void setLast_updated(Date last_updated) {
-		this.last_updated = last_updated;
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
     
     

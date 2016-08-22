@@ -18,6 +18,7 @@
         <gcloud.project>googl-cit-gcp</gcloud.project>
         <application.module>bigtable</application.module>
         <application.version>leanplum</application.version>
+        <hbase-lite.version>1.2-SNAPSHOT</hbase-lite.version>
 	</properties>
 
 	<prerequisites>
@@ -109,7 +110,7 @@
         <dependency>
             <groupId>hbase.orm</groupId>
             <artifactId>hbase-orm-lite</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>${hbase-lite.version}</version>
         </dependency>
 
 	</dependencies>
@@ -217,7 +218,7 @@
                         <configuration>
                             <groupId>hbase.orm</groupId>
                             <artifactId>hbase-orm-lite</artifactId>
-                            <version>1.1-SNAPSHOT</version>
+                            <version>${hbase-lite.version}</version>
                             <packaging>jar</packaging>
                             <file>${basedir}/src/lib/hbase-orm-lite-1.1-SNAPSHOT.jar</file>
                         </configuration>

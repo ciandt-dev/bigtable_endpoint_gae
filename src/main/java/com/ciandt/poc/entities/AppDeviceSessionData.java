@@ -3,7 +3,9 @@ package com.ciandt.poc.entities;
 import java.util.Date;
 
 import com.wlu.orm.hbase.annotation.DatabaseField;
+import com.wlu.orm.hbase.annotation.DatabaseTable;
 
+@DatabaseTable(canBeFamily=true)
 public class AppDeviceSessionData {
     
 	@DatabaseField()

@@ -2,7 +2,9 @@ package com.ciandt.poc.entities;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.wlu.orm.hbase.annotation.DatabaseField;
+import com.wlu.orm.hbase.annotation.DatabaseTable;
 
+@DatabaseTable(canBeFamily=true)
 public class AppDeviceLocaleInfo {
 
     @DatabaseField()

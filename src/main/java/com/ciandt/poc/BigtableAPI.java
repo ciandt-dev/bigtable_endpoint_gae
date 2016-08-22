@@ -1,6 +1,5 @@
 package com.ciandt.poc;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
-import com.wlu.orm.hbase.exceptions.HBaseOrmException;
 
 @Api(name = "poc", version = "v1", clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID })
 @ApiClass(resource = "sample")
