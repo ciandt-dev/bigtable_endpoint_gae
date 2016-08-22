@@ -1,8 +1,8 @@
 package com.ciandt.poc;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import com.ciandt.poc.entities.AppDevice;
@@ -10,7 +10,6 @@ import com.ciandt.poc.entities.AppDeviceLocaleInfo;
 import com.ciandt.poc.entities.AppDeviceSessionData;
 import com.ciandt.poc.entities.AppDeviceUserInfo;
 import com.google.cloud.bigtable.hbase.BigtableConfiguration;
-import com.google.common.collect.ImmutableMap;
 import com.wlu.orm.hbase.connection.HBaseConnection;
 import com.wlu.orm.hbase.dao.Dao;
 import com.wlu.orm.hbase.dao.DaoImpl;
@@ -21,7 +20,7 @@ import com.wlu.orm.hbase.schema.value.StringValue;
  * Created by lucasarruda on 8/11/16
  * and by famaral on 8/17/16.
  */
-public class BigtableORMHelper<T> {
+public class BigtableORMHelper<T> implements Closeable{
 
 	private static final Logger log = Logger.getLogger(BigtableORMHelper.class.getName());
 
@@ -92,32 +91,41 @@ public class BigtableORMHelper<T> {
 			return e.getMessage();
 		}
 	}
-	
+
 	public static void main(String[] args) throws Exception {
-		BigtableORMHelper<AppDevice> orm = new BigtableORMHelper<AppDevice>(AppDevice.class);
-		orm.createTable();
-		AppDevice app = new AppDevice();
-		app.setApp("myid#0101010");
-		app.setAnomaly(123123L);
-		app.setCreated(new Date());
-		app.setToken("sometoken");
-		app.setVersion(1);
-		
-		AppDeviceSessionData data = new AppDeviceSessionData();
-		data.setCurrentSession("mysession0000000001");
-		data.setSessionClosed(false);
-		app.setData(data);
-		
-		AppDeviceLocaleInfo locale = new AppDeviceLocaleInfo();
-		locale.setCity("SaoPaulo");
-		locale.setCountry("BR");
-		app.setLocaleInfo(locale);
-		
-		AppDeviceUserInfo info = new AppDeviceUserInfo();
-		info.setUserId("myuserId");
-		app.setUserInfo(info);
-		
-		orm.insert(app);
-		System.exit(0);
+		try(BigtableORMHelper<AppDevice> orm = 
+				new BigtableORMHelper<AppDevice>(AppDevice.class)){
+			orm.createTable();
+			AppDevice app = new AppDevice();
+			app.setApp("myid#0101010");
+			app.setAnomaly(123123L);
+			app.setCreated(new Date());
+			app.setToken("sometoken");
+			app.setVersion(1);
+
+			AppDeviceSessionData data = new AppDeviceSessionData();
+			data.setCurrentSession("mysession0000000001");
+			data.setSessionClosed(false);
+			app.setData(data);
+
+			AppDeviceLocaleInfo locale = new AppDeviceLocaleInfo();
+			locale.setCity("SaoPaulo");
+			locale.setCountry("BR");
+			app.setLocaleInfo(locale);
+
+			AppDeviceUserInfo info = new AppDeviceUserInfo();
+			info.setUserId("myuserId");
+			app.setUserInfo(info);
+
+			orm.insert(app);
+			System.exit(0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.hBaseConnection.getConnection().close();
 	}
 }
