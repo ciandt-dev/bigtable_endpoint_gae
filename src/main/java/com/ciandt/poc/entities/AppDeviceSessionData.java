@@ -153,5 +153,15 @@ public class AppDeviceSessionData {
 	public void setLastSessionStartTime(Date lastSessionStartTime) {
 		this.lastSessionStartTime = lastSessionStartTime;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "AppDeviceSessionData [totalTimeFromSessions=" + totalTimeFromSessions + ", lastSessionStartTime="
+				+ lastSessionStartTime + ", currentSession=" + currentSession + ", firstSession=" + firstSession
+				+ ", sessionStartTime=" + sessionStartTime + ", sessionTimeKey=" + sessionTimeKey + ", sessionPosition="
+				+ sessionPosition + ", sessionIsBackground=" + sessionIsBackground + ", sessionCountedForDau="
+				+ sessionCountedForDau + ", sessionCountedForMau=" + sessionCountedForMau + ", sessionClosed="
+				+ sessionClosed + ", sessionPauseTime=" + sessionPauseTime + ", sessionPauseLengthSeconds="
+				+ sessionPauseLengthSeconds + "]";
+	}
 }

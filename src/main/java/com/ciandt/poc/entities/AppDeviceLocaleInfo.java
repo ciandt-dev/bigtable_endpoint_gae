@@ -86,5 +86,11 @@ public class AppDeviceLocaleInfo {
 	public void setCity(String city) {
 		this.city = city;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "AppDeviceLocaleInfo [country=" + country + ", region=" + region + ", timezone=" + timezone
+				+ ", timezoneOffsetSeconds=" + timezoneOffsetSeconds + ", locale=" + locale + ", location=" + location
+				+ ", city=" + city + "]";
+	}
 }

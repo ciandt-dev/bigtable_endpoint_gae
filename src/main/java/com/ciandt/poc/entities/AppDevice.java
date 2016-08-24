@@ -22,7 +22,7 @@ public class AppDevice {
     private String appVersion;
 
     @DatabaseField(familyName = "anomaly")
-    private long anomaly;
+    private int anomaly;
 
     @DatabaseField(familyName = "version")
     private int version;
@@ -66,11 +66,11 @@ public class AppDevice {
         this.appVersion = appVersion;
     }
 
-    public long getAnomaly() {
+    public int getAnomaly() {
         return anomaly;
     }
 
-    public void setAnomaly(long anomaly) {
+    public void setAnomaly(int anomaly) {
         this.anomaly = anomaly;
     }
 
@@ -113,4 +113,13 @@ public class AppDevice {
 	public void setUserInfo(AppDeviceUserInfo userInfo) {
 		this.userInfo = userInfo;
 	}
+
+	@Override
+	public String toString() {
+		return "AppDevice [app=" + app + ", created=" + created + ", appVersion=" + appVersion + ", anomaly=" + anomaly
+				+ ", version=" + version + ", token=" + token + ", userInfo=" + userInfo + ", data=" + data
+				+ ", localeInfo=" + localeInfo + "]";
+	}
+	
+	
 }

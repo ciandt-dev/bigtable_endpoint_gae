@@ -85,6 +85,11 @@ public class AppDeviceUserInfo {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		return "AppDeviceUserInfo [userId=" + userId + ", isDeveloper=" + isDeveloper + ", hasUserId=" + hasUserId
+				+ ", lastUserTime=" + lastUserTime + ", ip=" + ip + ", lastActive=" + lastActive + ", lastUpdated="
+				+ lastUpdated + "]";
+	}
 }
