@@ -9,18 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ciandt.poc.BigtableORMHelper;
 import com.ciandt.poc.entities.AppDevice;
+import com.ciandt.poc.orm.BigtableORMHelper;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.internal.LinkedTreeMap;
 import com.google.common.reflect.TypeToken;
-import com.wlu.orm.hbase.exceptions.HBaseOrmException;
 
 /**
  * Created by famaral on 8/15/16.
  */
 @WebServlet(name = "orm", urlPatterns = {"/orm/appdevice"} )
-public class BigTableORMServlet<T> extends HttpServlet {
+public class BigTableORMServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6253116304248759593L;
 
@@ -30,18 +29,15 @@ public class BigTableORMServlet<T> extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
 		if(req.getRequestURI().equals("/favicon.ico"))
 			return;
-		String pathInfo = req.getPathInfo();
-		String rowkey = pathInfo.split("/")[1];
+		String pathInfo = req.getParameter("rowkey");
 		resp.setContentType("text/plain");
 		PrintWriter pw = resp.getWriter();
-		String row = "";
 		try(BigtableORMHelper<AppDevice> orm = 
 				new BigtableORMHelper<AppDevice>(AppDevice.class)) {
-			row = orm.getRowByKey(rowkey);
-			pw.println("Row found: \n  " + row );
+			AppDevice row = orm.getRowByKey(pathInfo);
+			pw.println("Row found: \n  " +  row);
 		} catch (Exception e) {
 			e.printStackTrace();
 			pw.println("Error trying to getRowByKey" );
@@ -103,3 +99,4 @@ public class BigTableORMServlet<T> extends HttpServlet {
 		pw.close();
 	}
 }
+

@@ -14,11 +14,11 @@
 		<gcloud.plugin.version>2.0.9.106.v20160420</gcloud.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
-        <gcloud.directory>/usr/local/google-cloud-sdk</gcloud.directory>
-        <gcloud.project>googl-cit-gcp</gcloud.project>
-        <application.module>bigtable</application.module>
-        <application.version>leanplum</application.version>
-        <hbase-lite.version>1.2-SNAPSHOT</hbase-lite.version>
+		<gcloud.directory>/usr/local/google-cloud-sdk</gcloud.directory>
+		<gcloud.project>googl-cit-gcp</gcloud.project>
+		<application.module>bigtable</application.module>
+		<application.version>leanplum</application.version>
+		<hbase-lite.version>1.2-SNAPSHOT</hbase-lite.version>
 	</properties>
 
 	<prerequisites>
@@ -107,11 +107,19 @@
 		</dependency>
 
 		<!-- CI&T FORK - https://github.com/ciandt-dev/hbase-ormlite -->
-        <dependency>
-            <groupId>hbase.orm</groupId>
-            <artifactId>hbase-orm-lite</artifactId>
-            <version>${hbase-lite.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>hbase.orm</groupId>
+			<artifactId>hbase-orm-lite</artifactId>
+			<version>${hbase-lite.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -181,7 +189,7 @@
 					<!-- address>0.0.0.0</address> <port>8080</port -->
 					<!-- Comment in the below snippet to enable local debugging with a remote 
 						debugger like those included with Eclipse or IntelliJ -->
-					<jvmFlags> 
+					<jvmFlags>
 						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
 					</jvmFlags>
 				</configuration>
@@ -200,31 +208,31 @@
 				<configuration>
 					<gcloud_directory>${gcloud.directory}</gcloud_directory>
 					<gcloud_project>${gcloud.project}</gcloud_project>
-<!-- 					<modules>${application.module}</modules> -->
+					<!-- <modules>${application.module}</modules> -->
 					<version>${application.version}</version>
 				</configuration>
 			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.2</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
-                            <groupId>hbase.orm</groupId>
-                            <artifactId>hbase-orm-lite</artifactId>
-                            <version>${hbase-lite.version}</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/src/lib/hbase-orm-lite-${hbase-lite.version}.jar</file>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<groupId>hbase.orm</groupId>
+							<artifactId>hbase-orm-lite</artifactId>
+							<version>${hbase-lite.version}</version>
+							<packaging>jar</packaging>
+							<file>${basedir}/src/lib/hbase-orm-lite-${hbase-lite.version}.jar</file>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 		<pluginManagement>

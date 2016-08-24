@@ -1,20 +1,14 @@
-package com.ciandt.poc;
+package com.ciandt.poc.orm;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.BufferedMutator;
-import org.apache.hadoop.hbase.client.BufferedMutatorParams;
-
 import com.ciandt.poc.entities.AppDevice;
 import com.ciandt.poc.entities.AppDeviceLocaleInfo;
 import com.ciandt.poc.entities.AppDeviceSessionData;
 import com.ciandt.poc.entities.AppDeviceUserInfo;
-import com.google.cloud.bigtable.hbase.BigtableConfiguration;
-import com.wlu.orm.hbase.connection.HBaseConnection;
 import com.wlu.orm.hbase.dao.Dao;
 import com.wlu.orm.hbase.dao.DaoImpl;
 import com.wlu.orm.hbase.exceptions.HBaseOrmException;
@@ -24,22 +18,15 @@ import com.wlu.orm.hbase.schema.value.StringValue;
  * Created by lucasarruda on 8/11/16
  * and by famaral on 8/17/16.
  */
-public class BigtableORMHelper<T> implements Closeable{
+public class BigtableORMHelper<T> extends BigTableConnectionHbase implements Closeable{
 
 	private static final Logger log = Logger.getLogger(BigtableORMHelper.class.getName());
 
-	private static String PROJECT_ID = "leanplum-staging";
-
-	private static String INSTANCE_ID = "cit-test";
-
-	private HBaseConnection hBaseConnection;
-
-	private Dao<T> dao;
+	protected Dao<T> dao;
 
 	public BigtableORMHelper(Class<T> clazz) throws Exception {
+		super();
 		try {
-			this.hBaseConnection = new HBaseConnection(
-					BigtableConfiguration.connect(PROJECT_ID, INSTANCE_ID));
 			this.dao = new DaoImpl<T>(clazz, hBaseConnection);
 		} catch (Exception e) {
 			// Deal with it...
@@ -85,23 +72,16 @@ public class BigtableORMHelper<T> implements Closeable{
 		}
 	}
 
-	public String getRowByKey(String key) {
+	public T getRowByKey(String key) throws IOException {
 		try {
 			T queryWithFilter = dao.queryById(new StringValue(key));
-			return queryWithFilter.toString();
+			return queryWithFilter;
 		} catch (HBaseOrmException e) {
 			log.severe("GetRowByKey failed.");
 			e.printStackTrace();
-			return e.getMessage();
+			throw new IOException(e);
 		}
 	}
-
-	public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
-		return this.hBaseConnection.getConnection()
-								   .getBufferedMutator(tableName);
-
-	}
-
 
 	@Override
 	public void close() throws IOException {
@@ -111,10 +91,9 @@ public class BigtableORMHelper<T> implements Closeable{
 	public static void main(String[] args) throws Exception {
 		try(BigtableORMHelper<AppDevice> orm = 
 				new BigtableORMHelper<AppDevice>(AppDevice.class)){
-			orm.createTable();
 			AppDevice app = new AppDevice();
-			app.setApp("myid#0101010");
-			app.setAnomaly(123123L);
+			app.setApp("myid-0101010");
+			app.setAnomaly(123123);
 			app.setCreated(new Date());
 			app.setToken("sometoken");
 			app.setVersion(1);
@@ -136,6 +115,7 @@ public class BigtableORMHelper<T> implements Closeable{
 			orm.insert(app);
 			System.exit(0);
 		}catch(Exception e){
+			System.out.println(e);
 			e.printStackTrace();
 		}
 	}
