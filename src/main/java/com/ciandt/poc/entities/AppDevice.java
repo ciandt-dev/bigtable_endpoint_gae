@@ -18,16 +18,16 @@ public class AppDevice {
     @DatabaseField(familyName = "created")
     private Date created;
     
-    @DatabaseField(familyName = "app_version")
+    @DatabaseField(familyName = "app_version", isIndexed=true)
     private String appVersion;
 
-    @DatabaseField(familyName = "anomaly")
+    @DatabaseField(familyName = "anomaly", isIndexed=true)
     private int anomaly;
 
-    @DatabaseField(familyName = "version")
+    @DatabaseField(familyName = "version", isIndexed=true)
     private int version;
 
-    @DatabaseField(familyName = "token")
+    @DatabaseField(familyName = "token", isIndexed=true)
     private String token;
 
     @DatabaseField(familyName = "user_info")

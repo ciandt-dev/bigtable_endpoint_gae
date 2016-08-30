@@ -38,7 +38,7 @@ public class BigtableORMHelper<T> extends BigTableConnectionHbase implements Clo
 	public String createTable() {
 		try {
 			dao.createTableIfNotExist();
-			log.info("Talbe created or table already exists");
+			log.info("Table created or table already exists");
 		} catch (IOException e) {
 			log.severe("CreateTable failed.");
 			e.printStackTrace();
@@ -91,12 +91,14 @@ public class BigtableORMHelper<T> extends BigTableConnectionHbase implements Clo
 	public static void main(String[] args) throws Exception {
 		try(BigtableORMHelper<AppDevice> orm = 
 				new BigtableORMHelper<AppDevice>(AppDevice.class)){
+			orm.createTable();
 			AppDevice app = new AppDevice();
-			app.setApp("myid-0101010");
+			app.setApp("myid0");
 			app.setAnomaly(123123);
 			app.setCreated(new Date());
 			app.setToken("sometoken");
 			app.setVersion(1);
+			app.setAppVersion("1234");
 
 			AppDeviceSessionData data = new AppDeviceSessionData();
 			data.setCurrentSession("mysession0000000001");
@@ -113,7 +115,6 @@ public class BigtableORMHelper<T> extends BigTableConnectionHbase implements Clo
 			app.setUserInfo(info);
 
 			orm.insert(app);
-			System.exit(0);
 		}catch(Exception e){
 			System.out.println(e);
 			e.printStackTrace();

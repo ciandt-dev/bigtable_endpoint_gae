@@ -57,7 +57,7 @@ public class BufferedMutatorORM extends Configured implements Tool {
 			} 
 
 			for (Future<String> f : futures) { 
-				String result = f.get(5, TimeUnit.MINUTES);
+				String result = f.get(15, TimeUnit.SECONDS);
 				LOG.info(">>>>>>>>>>>>> "+result);
 			} 
 			workerPool.shutdown(); 

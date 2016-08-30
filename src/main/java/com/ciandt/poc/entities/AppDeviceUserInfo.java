@@ -8,7 +8,7 @@ import com.wlu.orm.hbase.annotation.DatabaseTable;
 @DatabaseTable(canBeFamily=true)
 public class AppDeviceUserInfo {
 
-    @DatabaseField(qualifierName="user_id_value")
+    @DatabaseField(isIndexed=true)
     private String userId;
 
     @DatabaseField()

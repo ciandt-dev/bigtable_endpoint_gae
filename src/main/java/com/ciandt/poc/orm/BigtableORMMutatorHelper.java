@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.client.RetriesExhaustedWithDetailsException;
 import com.ciandt.poc.orm.BigTableConnectionHbase;
 import com.wlu.orm.hbase.exceptions.HBaseOrmException;
 import com.wlu.orm.hbase.schema.DataMapper;
-import com.wlu.orm.hbase.schema.DataMapperFacory;
+import com.wlu.orm.hbase.schema.DataMapperFactory;
 import com.wlu.orm.hbase.schema.FamilytoQualifersAndValues;
 import com.wlu.orm.hbase.schema.value.Value;
 import com.wlu.orm.hbase.schema.value.ValueFactory;
@@ -32,7 +32,7 @@ public class BigtableORMMutatorHelper<T> extends BigTableConnectionHbase impleme
 
 	private BufferedMutator bufferedMutator;
 
-	private DataMapperFacory<T> dataMapperFactory;
+	private DataMapperFactory<T> dataMapperFactory;
 
 	private BufferedMutatorParams params;
 			
@@ -43,7 +43,7 @@ public class BigtableORMMutatorHelper<T> extends BigTableConnectionHbase impleme
 					TableName.valueOf(clazz.getSimpleName())).listener(listener);
 			this.bufferedMutator = this.hBaseConnection.getConnection()
 					.getBufferedMutator(params);
-			 dataMapperFactory = new DataMapperFacory<T>(clazz);
+			 dataMapperFactory = new DataMapperFactory<T>(clazz);
 		} catch (Exception e) {
 			// Deal with it...
 			log.severe("Connection to BigTable failed.");
@@ -70,7 +70,7 @@ public class BigtableORMMutatorHelper<T> extends BigTableConnectionHbase impleme
 		Put put = new Put(row.toBytes());
         Map<Field, FamilytoQualifersAndValues> dataFields = dataMapper.getDatafieldsToFamilyQualifierValue();
 		for (Field field : dataFields.keySet()) {
-			dataFields.get(field).AddToPut(put);
+			dataFields.get(field).addToPut(put);
         }
 		bufferedMutator.mutate(put);
 	}
